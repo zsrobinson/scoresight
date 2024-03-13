@@ -33,7 +33,40 @@ ScoreSight is a web app that aims to provide similar functionality to [Gradescop
     - _(probably)_ vercel for hosting
   - [pocketbase](https://pocketbase.io/) as the database and file store
     - _(probably)_ run on one of my machines, behind cloudflare tunnel
+    - can use [pocketbase-typegen](https://github.com/patmood/pocketbase-typegen) to generate types for typescript
 - urls
   - `scoresight.app` for main app
   - `db.scoresight.app` _(probably)_ for proxy to pocketbase
   - some other redirects to main url, such as _(possibly)_ `scoresight.zsrobinson.com` or `scoresight.vercel.app`
+
+## Database Schema _(TBD)_
+
+```
+     ┏━━━━━━━━━━━━━━━━━━━┓       ┏━━━━━━━━━━━━━━━━━━━┓       ┏━━━━━━━━━━━━━━━━━━━┓
+     ┃    Assignments    ┃       ┃      Classes      ┃       ┃       Users       ┃
+     ┗━━━━━━━━━━━━━━━━━━━┛       ┗━━━━━━━━━━━━━━━━━━━┛       ┗━━━━━━━━━━━━━━━━━━━┛
+┌ ─ ▶│ id                │    ─ ▶│ id                │    ─ ▶│ id                │
+     ├───────────────────┤   │   ├───────────────────┤   │   ├───────────────────┤
+│    │ name (text)       │       │ name (text)       │       │ name (text)       │
+     ├───────────────────┤   │   ├───────────────────┤   │   ├───────────────────┤
+│    │ type (enum)       │       │ owner (key)       │─ ─    │ settings (json)   │
+     ├───────────────────┤   │   ├───────────────────┤   │   └───────────────────┘
+│    │ class (key)       │─ ─    │ instructors (key) │─ ─
+     └───────────────────┘       ├───────────────────┤   │
+│                                │ students (key)    │─ ─
+ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐   └───────────────────┘   │
+
+     ┏━━━━━━━━━━━━━━━━━━━┓   │                           │
+     ┃    Submissions    ┃
+     ┗━━━━━━━━━━━━━━━━━━━┛   │                           │
+     │ id                │
+     ├───────────────────┤   │                           │
+     │ user (key)        │─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+     ├───────────────────┤   │
+     │ assignment (key)  │─ ─
+     ├───────────────────┤
+     │ file (blob)       │
+     ├───────────────────┤
+     │ feedback (json)   │
+     └───────────────────┘
+```
