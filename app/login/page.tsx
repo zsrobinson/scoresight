@@ -1,5 +1,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { PageLayout } from "~/components/page-layout";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 import { login } from "~/lib/auth/login";
 import { createServerClient } from "~/lib/pocketbase/server";
 
@@ -10,26 +13,26 @@ export default function Page() {
   }
 
   return (
-    <main>
-      <form className="flex flex-col gap-2 items-start" action={login}>
-        <input
-          type="text"
+    <PageLayout>
+      <form action={login}>
+        <Input
+          type="email"
           name="email"
-          placeholder="email"
-          className="border"
+          placeholder="Email"
+          className="max-w-xs mb-2"
           required
         />
 
-        <input
+        <Input
           type="password"
           name="password"
-          placeholder="password"
-          className="border"
+          placeholder="Password"
+          className="max-w-xs mb-4"
           required
         />
 
-        <button type="submit">Submit</button>
+        <Button type="submit">Submit</Button>
       </form>
-    </main>
+    </PageLayout>
   );
 }
