@@ -8,14 +8,17 @@ type NavLinkProps = { href: string; children: ReactNode };
 
 export function NavLink({ href, children }: NavLinkProps) {
   const path = usePathname();
+  const currPath =
+    href === path || (href.includes("classes") && path.includes("classes"));
 
   return (
     <Link
       href={href}
       className={
-        href === path
-          ? "underline decoration-muted-foreground/30 underline-offset-4"
-          : ""
+        "transition-colors " +
+        (currPath
+          ? "text-foreground font-medium"
+          : "text-muted-foreground hover:text-foreground")
       }
     >
       {children}
