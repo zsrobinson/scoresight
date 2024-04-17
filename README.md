@@ -1,6 +1,9 @@
 # ScoreSight
 
-ScoreSight is a web app that aims to provide similar functionality to [Gradescope](https://www.gradescope.com/). It allows instructors to easily manage and grade assignments, and students to submit their work and view their grades. This project is designed primarily as a way to practice skills relating to full-stack web development, rather than a tool to be used in the real world.
+> [!WARNING]  
+> This project is a current work in progress.
+
+ScoreSight is a full-stack web app that aims to provide similar functionality to [Gradescope](https://www.gradescope.com/). It allows instructors to easily manage and grade assignments, and students to submit their work and view their grades. This project is designed primarily as a way to practice skills relating to full-stack web development, rather than a tool to be used in the real world.
 
 ## Design Document
 
