@@ -39,6 +39,7 @@ export type AuthSystemFields<T = never> = {
 export type AssignmentsRecord = {
 	allow_submissions?: boolean
 	class: RecordIdString
+	due?: IsoDateString
 	name: string
 }
 

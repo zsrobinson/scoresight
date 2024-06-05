@@ -3,10 +3,10 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createServerClient } from "~/lib/pocketbase/server";
-import { ClassesResponse } from "./pocketbase/types";
 
 export async function create(_: any, formData: FormData) {
   const name = formData.get("name");
+  let newClassId = "";
 
   if (!name || typeof name !== "string") {
     return { error: "Cannot read name." };
@@ -17,13 +17,18 @@ export async function create(_: any, formData: FormData) {
     const owner = await client
       .collection("users")
       .getOne(client.authStore.model?.id);
-    const thisClass = await client
+    const newClass = await client
       .collection("classes")
       .create({ name, owner: owner.id });
-    return redirect("/classes/" + thisClass.id);
+    newClassId = newClass.id;
   } catch (e) {
+    console.error((e as Error).message);
     return { error: "Cannot create class." };
   }
+
+  // `redirect()` cannot be put inside of a try-catch block
+  // see https://github.com/vercel/next.js/issues/49298#issuecomment-1537433377
+  return redirect("/classes/" + newClassId);
 }
 
 export async function join(_: any, formData: FormData) {
@@ -43,5 +48,5 @@ export async function join(_: any, formData: FormData) {
     return { error: "Cannot create class." };
   }
 
-  redirect("/classes/" + id);
+  return redirect("/classes/" + id);
 }

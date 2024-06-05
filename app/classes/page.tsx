@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { PageLayout } from "~/components/page-layout";
 import { Button } from "~/components/ui/button";
 import { createServerClient } from "~/lib/pocketbase/server";
+import { assignmentCount } from "~/lib/utils";
 
 export default async function Page() {
   const client = createServerClient(cookies());
@@ -51,8 +52,4 @@ export default async function Page() {
       </div>
     </PageLayout>
   );
-}
-
-function assignmentCount(n: number) {
-  return n === 1 ? `${n} Assignment` : `${n} Assignments`;
 }
