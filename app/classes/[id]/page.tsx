@@ -1,10 +1,11 @@
-import { IconArrowLeft } from "@tabler/icons-react";
+import { IconArrowLeft, IconExternalLink } from "@tabler/icons-react";
 import { format } from "date-fns";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { PageLayout } from "~/components/page-layout";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Badge } from "~/components/ui/badge";
+import { Card, CardContent } from "~/components/ui/card";
 import {
   Table,
   TableBody,
@@ -46,7 +47,7 @@ export default async function Page({ params }: PageProps) {
           size={16}
           className="translate-x-0.5 group-hover:-translate-x-0 transition-transform"
         />
-        All Classes
+        Classes
       </a>
 
       <div className="flex flex-col items-start gap-1">
@@ -70,7 +71,17 @@ export default async function Page({ params }: PageProps) {
           <TableBody>
             {assignments.map((assignment) => (
               <TableRow key={assignment.id}>
-                <TableCell>{assignment.name}</TableCell>
+                <TableCell>
+                  <a href={`/assignments/${assignment.id}`} className="group">
+                    <span className="underline decoration-border">
+                      {assignment.name}
+                    </span>
+                    <IconExternalLink
+                      className="inline pb-0.5 pl-1 text-muted-foreground"
+                      size={20}
+                    />
+                  </a>
+                </TableCell>
                 <TableCell>{format(assignment.due, "PPPp")}</TableCell>
                 <TableCell>N/A</TableCell>
                 <TableCell>0</TableCell>
@@ -82,18 +93,20 @@ export default async function Page({ params }: PageProps) {
           )}
         </Table>
 
-        <div className="flex flex-col gap-2 p-4 border rounded-lg min-w-60">
-          <h3 className="font-semibold text-lg leading-none pb-2">People</h3>
-          <UserDisplay client={client} user={owner} text="Instructor" />
-          {students?.map((student) => (
-            <UserDisplay
-              key={student.id}
-              client={client}
-              user={student}
-              text="Student"
-            />
-          ))}
-        </div>
+        <Card className="min-w-60">
+          <CardContent className="flex flex-col gap-2">
+            <h3 className="font-semibold text-lg leading-none pb-2">People</h3>
+            <UserDisplay client={client} user={owner} text="Instructor" />
+            {students?.map((student) => (
+              <UserDisplay
+                key={student.id}
+                client={client}
+                user={student}
+                text="Student"
+              />
+            ))}
+          </CardContent>
+        </Card>
       </div>
     </PageLayout>
   );
